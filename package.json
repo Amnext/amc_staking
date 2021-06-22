@@ -1,0 +1,11 @@
+{
+  "name": "amc_staking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Amnext/amc_staking.git",
+  "author": "Rauf",
+  "license": "MIT",
+  "dependencies": {
+    "@pancakeswap/pancake-swap-lib": "^0.0.4"
+  }
+}
