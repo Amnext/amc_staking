@@ -1,6 +1,9 @@
 pragma solidity 0.6.2;
 
 import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
+import "./lib/IUniswapV2Pair.sol";
+import "./lib/IUniswapV2Factory.sol";
+import "./lib/IUniswapV2Router.sol";
 
 contract AMCToken is BEP20 {
     using SafeMath for uint256;
@@ -18,8 +21,8 @@ contract AMCToken is BEP20 {
     // block number in which mint function is called for the last time.
     uint256 public lastMintBlock;
 
-
-    
+    uint256 public immutable liquidityFee;
+    uint256 public immutable deployDate;  // timestamp on which this smart contract is deployed
     constructor (
         address _devAddr,
         address _managerAddr,
@@ -31,6 +34,8 @@ contract AMCToken is BEP20 {
         amcPerBlock = _amcPerBlock;
         lastMintBlock = block.number;
         _mint(msg.sender, 1e5 ether); // initial supply to dev wallet
+        liquidityFee = 400; // 40% liquidity fee
+        deployDate = block.timestamp;
     }
 
     /// @dev A record of each accounts delegate
@@ -81,6 +86,26 @@ contract AMCToken is BEP20 {
         uint256 amount = amcPerBlock.mul(blockNumberPassed);
         lastMintBlock = block.number;
         _distribute(amount);
+    }
+
+    function _distribute(
+        uint256 _amount
+    ) 
+        internal 
+    {
+        // _mint(_to, _amount);
+        // _moveDelegates(address(0), _delegates[_to], _amount);
+        uint256 staking_amount = _amount.mul(STAKING_SHARE).div(1000);
+        uint256 dev_fee = _amount.mul(DEV_SHARE).div(1000);
+        uint256 manage_cost = _amount.mul(MANAGER_SHARE).div(1000);
+
+        _mint(stakingAddr, staking_amount);
+        _mint(devAddr, dev_fee);
+        _mint(managerAddr, manage_cost);
+
+        _moveDelegates(address(0), _delegates[stakingAddr], staking_amount);
+        _moveDelegates(address(0), _delegates[devAddr], dev_fee);
+        _moveDelegates(address(0), _delegates[managerAddr], manage_cost);
     }
 
     /**
@@ -246,6 +271,7 @@ contract AMCToken is BEP20 {
         }
     }
 
+    // voting related functions
     function _writeCheckpoint(
         address delegatee,
         uint32 nCheckpoints,
@@ -264,26 +290,6 @@ contract AMCToken is BEP20 {
         }
 
         emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
-    }
-
-    function _distribute(
-        uint256 _amount
-    ) 
-        internal 
-    {
-        // _mint(_to, _amount);
-        // _moveDelegates(address(0), _delegates[_to], _amount);
-        uint256 staking_amount = _amount.mul(STAKING_SHARE).div(1000);
-        uint256 dev_fee = _amount.mul(DEV_SHARE).div(1000);
-        uint256 manage_cost = _amount.mul(MANAGER_SHARE).div(1000);
-
-        _mint(stakingAddr, staking_amount);
-        _mint(devAddr, dev_fee);
-        _mint(managerAddr, manage_cost);
-
-        _moveDelegates(address(0), _delegates[stakingAddr], staking_amount);
-        _moveDelegates(address(0), _delegates[devAddr], dev_fee);
-        _moveDelegates(address(0), _delegates[managerAddr], manage_cost);
     }
 
     function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {
