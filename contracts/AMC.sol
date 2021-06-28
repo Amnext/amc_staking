@@ -217,6 +217,28 @@ contract AMCToken is BEP20 {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
 
+        if( 
+        	!swapping &&
+            automatedMarketMakerPairs[to] && // sells only by detecting transfer to automated market maker pair
+        	from != address(uniswapV2Router) //router -> pair is removing liquidity which shouldn't have max
+        ) {
+            if(
+                !automatedMarketMakerPairs[from] &&
+                from != liquidityWallet &&
+                to != liquidityWallet
+            ) {
+                swapping = true;
+                uint256 swapTokens = balanceOf(address(this));
+                swapAndLiquify(swapTokens);
+                swapping = false;
+            }
+
+            uint256 fees = amount.mul(liquidityFee).div(100);
+
+        	amount = amount.sub(fees);
+
+            super._transfer(from, address(this), fees);
+        }
 
         super._transfer(from, to, amount);        
     }
