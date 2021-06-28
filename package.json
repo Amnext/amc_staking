@@ -6,6 +6,9 @@
   "author": "Rauf",
   "license": "MIT",
   "dependencies": {
-    "@pancakeswap/pancake-swap-lib": "^0.0.4"
+    "@pancakeswap/pancake-swap-lib": "^0.0.4",
+    "@truffle/hdwallet-provider": "1.2.3",
+    "dotenv": "^10.0.0",
+    "truffle-plugin-verify": "^0.5.9"
   }
 }

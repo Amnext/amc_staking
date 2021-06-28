@@ -18,11 +18,12 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+ require('dotenv').config()
+ const HDWalletProvider = require('@truffle/hdwallet-provider');
+ // const infuraKey = "fj4jll3k.....";
+ 
+ const fs = require('fs');
+ const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**
@@ -36,17 +37,34 @@ module.exports = {
    */
 
   networks: {
+    mainnet: {
+      provider: () => new HDWalletProvider("", `https://bsc-dataseed.binance.org/`),
+      network_id: 56,
+      confirmations: 2,      // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 10000,  // # of blocks before a deployment times out  (minimum/default: 50)
+      gasPrice: 20000000000,
+      skipDryRun: true       // Skip dry run before migrations? (default: false for public nets )
+    },
+    bsctestnet: {
+      provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545/`),
+      network_id: 97,
+      confirmations: 5,       // # of confs to wait between deployments. (default: 0)
+      gasPrice: 20000000000,
+      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true ,      // Skip dry run before migrations? (default: false for public nets )
+      networkCheckTimeout:100000
+    },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 7545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -82,7 +100,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.6.5",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.6.12",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
@@ -101,5 +119,11 @@ module.exports = {
 
   db: {
     enabled: false
+  },
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    etherscan: process.env.ETHERSCAN_API_KEY
   }
 };
