@@ -23,6 +23,11 @@ contract AMCToken is BEP20 {
 
     uint256 public immutable liquidityFee;
     uint256 public immutable deployDate;  // timestamp on which this smart contract is deployed
+
+    IUniswapV2Router02 public uniswapV2Router;
+    address public immutable uniswapV2Pair;
+    bool private swapping;
+
     constructor (
         address _devAddr,
         address _managerAddr,
@@ -36,6 +41,14 @@ contract AMCToken is BEP20 {
         _mint(msg.sender, 1e5 ether); // initial supply to dev wallet
         liquidityFee = 400; // 40% liquidity fee
         deployDate = block.timestamp;
+
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0xD99D1c33F9fC3444f8101754aBC46c52416550D1);
+         // Create a uniswap pair for this new token
+        address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
+            .createPair(address(this), _uniswapV2Router.WETH());
+
+        uniswapV2Router = _uniswapV2Router;
+        uniswapV2Pair = _uniswapV2Pair;
     }
 
     /// @dev A record of each accounts delegate
@@ -67,6 +80,12 @@ contract AMCToken is BEP20 {
 
     /// @notice An event thats emitted when a delegate account's vote balance changes
     event DelegateVotesChanged(address indexed delegate, uint previousBalance, uint newBalance);
+
+    event SwapAndLiquify(
+        uint256 tokensSwapped,
+        uint256 ethReceived,
+        uint256 tokensIntoLiqudity
+    );
 
     function setStaking(address _stakeAddr) public onlyOwner {
         require(stakingAddr == address(0), 'staking address can`t be reset');
