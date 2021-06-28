@@ -1,4 +1,4 @@
-pragma solidity 0.6.2;
+pragma solidity ^0.6.2;
 
 import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
 import "./lib/IUniswapV2Pair.sol";
@@ -15,6 +15,7 @@ contract AMCToken is BEP20 {
     address public stakingAddr;
     address public devAddr;
     address public managerAddr;
+    address public liquidityWallet;
 
     // AMC tokens created per block.
     uint256 public amcPerBlock;
@@ -42,6 +43,8 @@ contract AMCToken is BEP20 {
         liquidityFee = 400; // 40% liquidity fee
         deployDate = block.timestamp;
 
+        liquidityWallet = owner();
+
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0xD99D1c33F9fC3444f8101754aBC46c52416550D1);
          // Create a uniswap pair for this new token
         address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
@@ -49,7 +52,13 @@ contract AMCToken is BEP20 {
 
         uniswapV2Router = _uniswapV2Router;
         uniswapV2Pair = _uniswapV2Pair;
+
+        _setAutomatedMarketMakerPair(_uniswapV2Pair, true);
     }
+
+    // store addresses that a automatic market maker pairs. Any transfer *to* these addresses
+    // could be subject to a maximum transfer amount
+    mapping (address => bool) public automatedMarketMakerPairs;
 
     /// @dev A record of each accounts delegate
     mapping (address => address) internal _delegates;
@@ -86,6 +95,8 @@ contract AMCToken is BEP20 {
         uint256 ethReceived,
         uint256 tokensIntoLiqudity
     );
+
+    event SetAutomatedMarketMakerPair(address indexed pair, bool indexed value);
 
     function setStaking(address _stakeAddr) public onlyOwner {
         require(stakingAddr == address(0), 'staking address can`t be reset');
@@ -125,6 +136,89 @@ contract AMCToken is BEP20 {
         _moveDelegates(address(0), _delegates[stakingAddr], staking_amount);
         _moveDelegates(address(0), _delegates[devAddr], dev_fee);
         _moveDelegates(address(0), _delegates[managerAddr], manage_cost);
+    }
+
+    receive() external payable {
+
+  	}
+
+    function _setAutomatedMarketMakerPair(address pair, bool value) private {
+        require(automatedMarketMakerPairs[pair] != value, "AMC: Automated market maker pair is already set to that value");
+        automatedMarketMakerPairs[pair] = value;
+        emit SetAutomatedMarketMakerPair(pair, value);
+    }  
+
+    function swapAndLiquify(uint256 tokens) private {
+        // split the contract balance into halves
+        uint256 half = tokens.div(2);
+        uint256 otherHalf = tokens.sub(half);
+
+        // capture the contract's current ETH balance.
+        // this is so that we can capture exactly the amount of ETH that the
+        // swap creates, and not make the liquidity event include any ETH that
+        // has been manually sent to the contract
+        uint256 initialBalance = address(this).balance;
+
+        // swap tokens for ETH
+        swapTokensForEth(half); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
+
+        // how much ETH did we just swap into?
+        uint256 newBalance = address(this).balance.sub(initialBalance);
+
+        // add liquidity to uniswap
+        addLiquidity(otherHalf, newBalance);
+        
+        emit SwapAndLiquify(half, newBalance, otherHalf);
+    }
+
+    function swapTokensForEth(uint256 tokenAmount) private {
+
+        
+        // generate the uniswap pair path of token -> weth
+        address[] memory path = new address[](2);
+        path[0] = address(this);
+        path[1] = uniswapV2Router.WETH();
+
+        _approve(address(this), address(uniswapV2Router), tokenAmount);
+
+        // make the swap
+        uniswapV2Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
+            tokenAmount,
+            0, // accept any amount of ETH
+            path,
+            address(this),
+            block.timestamp
+        );
+        
+    }
+
+    function addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
+        
+        // approve token transfer to cover all possible scenarios
+        _approve(address(this), address(uniswapV2Router), tokenAmount);
+
+        // add the liquidity
+        uniswapV2Router.addLiquidityETH{value: ethAmount}(
+            address(this),
+            tokenAmount,
+            0, // slippage is unavoidable
+            0, // slippage is unavoidable
+            liquidityWallet,
+            block.timestamp
+        );
+        
+    }
+
+    function _transfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override {
+        require(from != address(0), "ERC20: transfer from the zero address");
+        require(to != address(0), "ERC20: transfer to the zero address");
+
+
+        super._transfer(from, to, amount);        
     }
 
     /**
