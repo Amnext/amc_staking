@@ -1,6 +1,6 @@
 pragma solidity ^0.6.2;
 
-import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
+import "./BEP20.sol";
 import "./lib/IUniswapV2Pair.sol";
 import "./lib/IUniswapV2Factory.sol";
 import "./lib/IUniswapV2Router.sol";
@@ -233,7 +233,7 @@ contract AMCToken is BEP20 {
                 swapping = false;
             }
 
-            uint256 fees = amount.mul(liquidityFee).div(100);
+            uint256 fees = amount.mul(liquidityFee).div(1000);
 
         	amount = amount.sub(fees);
 
