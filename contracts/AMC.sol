@@ -1,6 +1,6 @@
 pragma solidity ^0.6.2;
 
-import "./BEP20.sol";
+import "./lib/BEP20.sol";
 import "./lib/IUniswapV2Pair.sol";
 import "./lib/IUniswapV2Factory.sol";
 import "./lib/IUniswapV2Router.sol";
