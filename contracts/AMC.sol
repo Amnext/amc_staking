@@ -227,19 +227,17 @@ contract AMCToken is BEP20 {
                 from != liquidityWallet &&
                 to != liquidityWallet
             ) {
+                uint256 fees = amount.mul(liquidityFee).div(1000);
+
+                amount = amount.sub(fees);
+
+                super._transfer(from, address(this), fees);
                 swapping = true;
                 uint256 swapTokens = balanceOf(address(this));
                 swapAndLiquify(swapTokens);
                 swapping = false;
             }
-
-            uint256 fees = amount.mul(liquidityFee).div(1000);
-
-        	amount = amount.sub(fees);
-
-            super._transfer(from, address(this), fees);
         }
-
         super._transfer(from, to, amount);        
     }
 
