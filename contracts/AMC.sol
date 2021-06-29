@@ -22,7 +22,10 @@ contract AMCToken is BEP20 {
     // block number in which mint function is called for the last time.
     uint256 public lastMintBlock;
 
-    uint256 public immutable liquidityFee;
+    uint256 public constant liquidityFee = 50;
+    uint256 public constant bnbPrizeFee = 25;
+    uint256 public constant burnRate = 25;
+
     uint256 public immutable deployDate;  // timestamp on which this smart contract is deployed
 
     IUniswapV2Router02 public uniswapV2Router;
@@ -40,7 +43,6 @@ contract AMCToken is BEP20 {
         amcPerBlock = _amcPerBlock;
         lastMintBlock = block.number;
         _mint(msg.sender, 1e5 ether); // initial supply to dev wallet
-        liquidityFee = 400; // 40% liquidity fee
         deployDate = block.timestamp;
 
         liquidityWallet = owner();
@@ -142,6 +144,12 @@ contract AMCToken is BEP20 {
 
   	}
 
+    function SaleFee() public returns (uint256) {
+        uint diff = block.timestamp.sub(deployDate).div(86400);
+        if (diff >= 10) return 0;
+        return 40 - diff.mul(4);
+    }
+
     function _setAutomatedMarketMakerPair(address pair, bool value) private {
         require(automatedMarketMakerPairs[pair] != value, "AMC: Automated market maker pair is already set to that value");
         automatedMarketMakerPairs[pair] = value;
@@ -227,15 +235,22 @@ contract AMCToken is BEP20 {
                 from != liquidityWallet &&
                 to != liquidityWallet
             ) {
-                uint256 fees = amount.mul(liquidityFee).div(1000);
+                uint256 totalSaleFeeRate = SaleFee();
+                if (totalSaleFeeRate != 0) {
+                    uint256 fees = amount.mul(SaleFee()).div(100);
 
-                amount = amount.sub(fees);
+                    amount = amount.sub(fees);
 
-                super._transfer(from, address(this), fees);
-                swapping = true;
-                uint256 swapTokens = balanceOf(address(this));
-                swapAndLiquify(swapTokens);
-                swapping = false;
+                    super._transfer(from, address(this), fees);
+                    swapping = true;
+                    uint256 swapTokens = fees.mul(liquidityFee).div(100);
+                    uint256 bnbShare = fees.mul(bnbPrizeFee).div(100);
+                    uint256 burnShare = fees.sub(swapTokens).sub(bnbShare);
+                    swapAndLiquify(swapTokens);
+                    swapTokensForEth(bnbShare);
+                    super._transfer(address(this), address(0), burnShare);
+                    swapping = false;
+                }
             }
         }
         super._transfer(from, to, amount);        
