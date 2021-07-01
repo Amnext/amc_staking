@@ -262,7 +262,7 @@ contract AMCToken is BEP20 {
                         address(bnbSponsorhip),
                         address(this)
                     );
-                    super._transfer(address(this), address(0), burnShare);
+                    super._burn(address(this), burnShare);
                     swapping = false;
                 }
             }
