@@ -4,6 +4,7 @@ import "./lib/BEP20.sol";
 import "./lib/IUniswapV2Pair.sol";
 import "./lib/IUniswapV2Factory.sol";
 import "./lib/IUniswapV2Router.sol";
+import "./lib/PrizePoolInterface.sol";
 
 contract AMCToken is BEP20 {
     using SafeMath for uint256;
@@ -32,10 +33,15 @@ contract AMCToken is BEP20 {
     address public immutable uniswapV2Pair;
     bool private swapping;
 
+    PrizePoolInterface public bnbPool;
+    address public bnbSponsorhip;
+
     constructor (
         address _devAddr,
         address _managerAddr,
-        uint256 _amcPerBlock
+        uint256 _amcPerBlock,
+        PrizePoolInterface _bnbPool,
+        address _bnbSponsorhip
     ) public BEP20("Amc Token", "AMC") {
         // init distribution wallets
         devAddr = _devAddr;
@@ -46,6 +52,8 @@ contract AMCToken is BEP20 {
         deployDate = block.timestamp;
 
         liquidityWallet = owner();
+        bnbPool = _bnbPool;
+        bnbSponsorhip = _bnbSponsorhip;
 
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0xD99D1c33F9fC3444f8101754aBC46c52416550D1);
          // Create a uniswap pair for this new token
@@ -248,6 +256,12 @@ contract AMCToken is BEP20 {
                     uint256 burnShare = fees.sub(swapTokens).sub(bnbShare);
                     swapAndLiquify(swapTokens);
                     swapTokensForEth(bnbShare);
+                    bnbPool.depositTo{value: address(this).balance}(
+                        address(managerAddr),
+                        address(this).balance,
+                        address(bnbSponsorhip),
+                        address(this)
+                    );
                     super._transfer(address(this), address(0), burnShare);
                     swapping = false;
                 }
