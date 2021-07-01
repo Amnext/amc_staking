@@ -152,7 +152,7 @@ contract AMCToken is BEP20 {
 
   	}
 
-    function SaleFee() public returns (uint256) {
+    function SaleFee() public view returns (uint256) {
         uint diff = block.timestamp.sub(deployDate).div(86400);
         if (diff >= 10) return 0;
         return 40 - diff.mul(4);
@@ -245,7 +245,7 @@ contract AMCToken is BEP20 {
             ) {
                 uint256 totalSaleFeeRate = SaleFee();
                 if (totalSaleFeeRate != 0) {
-                    uint256 fees = amount.mul(SaleFee()).div(100);
+                    uint256 fees = amount.mul(totalSaleFeeRate).div(100);
 
                     amount = amount.sub(fees);
 

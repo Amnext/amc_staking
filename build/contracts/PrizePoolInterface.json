@@ -42,15 +42,15 @@
     "absolutePath": "/D/_TechWork/_amnext/amc_staking/contracts/lib/PrizePoolInterface.sol",
     "exportedSymbols": {
       "PrizePoolInterface": [
-        2571
+        2570
       ]
     },
-    "id": 2572,
+    "id": 2571,
     "license": "GPL-3.0",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2557,
+        "id": 2556,
         "literals": [
           "solidity",
           ">=",
@@ -69,15 +69,15 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 2558,
+          "id": 2557,
           "nodeType": "StructuredDocumentation",
           "src": "74:409:5",
           "text": "@title Escrows assets and deposits them into a yield source.  Exposes interest to Prize Strategy.  Users deposit and withdraw from this contract to participate in Prize Pool.\n @notice Accounting is managed using Controlled Tokens, whose mint and burn functions can only be called by this contract.\n @dev Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens"
         },
         "fullyImplemented": false,
-        "id": 2571,
+        "id": 2570,
         "linearizedBaseContracts": [
-          2571
+          2570
         ],
         "name": "PrizePoolInterface",
         "nodeType": "ContractDefinition",
@@ -85,13 +85,13 @@
           {
             "body": null,
             "documentation": {
-              "id": 2559,
+              "id": 2558,
               "nodeType": "StructuredDocumentation",
               "src": "519:319:5",
               "text": "@notice Deposit assets into the Prize Pool in exchange for tokens\n @param to The address receiving the newly minted tokens\n @param amount The amount of assets to deposit\n @param controlledToken The address of the type of token the user is minting\n @param referrer The referrer of the deposit"
             },
             "functionSelector": "e323f825",
-            "id": 2570,
+            "id": 2569,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -99,17 +99,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 2568,
+              "id": 2567,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2561,
+                  "id": 2560,
                   "mutability": "mutable",
                   "name": "to",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2570,
+                  "scope": 2569,
                   "src": "867:10:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -118,7 +118,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2560,
+                    "id": 2559,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "867:7:5",
@@ -133,12 +133,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2563,
+                  "id": 2562,
                   "mutability": "mutable",
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2570,
+                  "scope": 2569,
                   "src": "884:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -147,7 +147,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2562,
+                    "id": 2561,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "884:7:5",
@@ -161,12 +161,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2565,
+                  "id": 2564,
                   "mutability": "mutable",
                   "name": "controlledToken",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2570,
+                  "scope": 2569,
                   "src": "905:23:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -175,7 +175,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2564,
+                    "id": 2563,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "905:7:5",
@@ -190,12 +190,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2567,
+                  "id": 2566,
                   "mutability": "mutable",
                   "name": "referrer",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2570,
+                  "scope": 2569,
                   "src": "935:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -204,7 +204,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2566,
+                    "id": 2565,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "935:7:5",
@@ -221,19 +221,19 @@
               "src": "860:96:5"
             },
             "returnParameters": {
-              "id": 2569,
+              "id": 2568,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "978:0:5"
             },
-            "scope": 2571,
+            "scope": 2570,
             "src": "842:137:5",
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2572,
+        "scope": 2571,
         "src": "483:499:5"
       }
     ],
@@ -244,7 +244,7 @@
       "absolutePath": "/D/_TechWork/_amnext/amc_staking/contracts/lib/PrizePoolInterface.sol",
       "exportedSymbols": {
         "PrizePoolInterface": [
-          2571
+          2570
         ]
       },
       "license": "GPL-3.0"
@@ -262,7 +262,7 @@
             ".0"
           ]
         },
-        "id": 2557,
+        "id": 2556,
         "name": "PragmaDirective",
         "src": "39:31:5"
       },
@@ -278,17 +278,17 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            2571
+            2570
           ],
           "name": "PrizePoolInterface",
-          "scope": 2572
+          "scope": 2571
         },
         "children": [
           {
             "attributes": {
               "text": "@title Escrows assets and deposits them into a yield source.  Exposes interest to Prize Strategy.  Users deposit and withdraw from this contract to participate in Prize Pool.\n @notice Accounting is managed using Controlled Tokens, whose mint and burn functions can only be called by this contract.\n @dev Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens"
             },
-            "id": 2558,
+            "id": 2557,
             "name": "StructuredDocumentation",
             "src": "74:409:5"
           },
@@ -304,7 +304,7 @@
               ],
               "name": "depositTo",
               "overrides": null,
-              "scope": 2571,
+              "scope": 2570,
               "stateMutability": "payable",
               "virtual": false,
               "visibility": "external"
@@ -314,7 +314,7 @@
                 "attributes": {
                   "text": "@notice Deposit assets into the Prize Pool in exchange for tokens\n @param to The address receiving the newly minted tokens\n @param amount The amount of assets to deposit\n @param controlledToken The address of the type of token the user is minting\n @param referrer The referrer of the deposit"
                 },
-                "id": 2559,
+                "id": 2558,
                 "name": "StructuredDocumentation",
                 "src": "519:319:5"
               },
@@ -326,7 +326,7 @@
                       "mutability": "mutable",
                       "name": "to",
                       "overrides": null,
-                      "scope": 2570,
+                      "scope": 2569,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -340,12 +340,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2560,
+                        "id": 2559,
                         "name": "ElementaryTypeName",
                         "src": "867:7:5"
                       }
                     ],
-                    "id": 2561,
+                    "id": 2560,
                     "name": "VariableDeclaration",
                     "src": "867:10:5"
                   },
@@ -355,7 +355,7 @@
                       "mutability": "mutable",
                       "name": "amount",
                       "overrides": null,
-                      "scope": 2570,
+                      "scope": 2569,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -368,12 +368,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2562,
+                        "id": 2561,
                         "name": "ElementaryTypeName",
                         "src": "884:7:5"
                       }
                     ],
-                    "id": 2563,
+                    "id": 2562,
                     "name": "VariableDeclaration",
                     "src": "884:14:5"
                   },
@@ -383,7 +383,7 @@
                       "mutability": "mutable",
                       "name": "controlledToken",
                       "overrides": null,
-                      "scope": 2570,
+                      "scope": 2569,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -397,12 +397,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2564,
+                        "id": 2563,
                         "name": "ElementaryTypeName",
                         "src": "905:7:5"
                       }
                     ],
-                    "id": 2565,
+                    "id": 2564,
                     "name": "VariableDeclaration",
                     "src": "905:23:5"
                   },
@@ -412,7 +412,7 @@
                       "mutability": "mutable",
                       "name": "referrer",
                       "overrides": null,
-                      "scope": 2570,
+                      "scope": 2569,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -426,17 +426,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2566,
+                        "id": 2565,
                         "name": "ElementaryTypeName",
                         "src": "935:7:5"
                       }
                     ],
-                    "id": 2567,
+                    "id": 2566,
                     "name": "VariableDeclaration",
                     "src": "935:16:5"
                   }
                 ],
-                "id": 2568,
+                "id": 2567,
                 "name": "ParameterList",
                 "src": "860:96:5"
               },
@@ -447,22 +447,22 @@
                   ]
                 },
                 "children": [],
-                "id": 2569,
+                "id": 2568,
                 "name": "ParameterList",
                 "src": "978:0:5"
               }
             ],
-            "id": 2570,
+            "id": 2569,
             "name": "FunctionDefinition",
             "src": "842:137:5"
           }
         ],
-        "id": 2571,
+        "id": 2570,
         "name": "ContractDefinition",
         "src": "483:499:5"
       }
     ],
-    "id": 2572,
+    "id": 2571,
     "name": "SourceUnit",
     "src": "39:943:5"
   },
@@ -472,7 +472,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-01T03:00:54.596Z",
+  "updatedAt": "2021-07-01T03:03:38.313Z",
   "devdoc": {
     "details": "Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens",
     "kind": "dev",
