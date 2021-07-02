@@ -1,4 +1,4 @@
-pragma solidity ^0.6.2;
+pragma solidity ^0.6.12;
 
 import "./lib/BEP20.sol";
 import "./lib/IUniswapV2Pair.sol";
