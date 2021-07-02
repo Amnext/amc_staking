@@ -7,8 +7,8 @@ const BNB_POOL_ADDRESS = "0xbccd4a3c8df54c887e5742fba5dc2a6f0c701f59";
 const BNB_SPONSOR = "0xFd6a98cD1a84713A74F8Aa8869537b20dfFFd515";
 module.exports = async function (deployer) {
   await deployer.deploy(AMCToken, DEV_WALLET, MANAGER_WALLET, "100000000000000000000", BNB_POOL_ADDRESS, BNB_SPONSOR);
-  const token = AMCToken.deployed();
+  const token = await AMCToken.deployed();
   await deployer.deploy(AMCStaking, token.address, "6000000000000000000")
-  const staking = AMCStaking.deployed();
+  const staking = await AMCStaking.deployed();
   await token.setStaking(staking.address)
 };
