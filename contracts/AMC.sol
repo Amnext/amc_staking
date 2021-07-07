@@ -44,7 +44,7 @@ contract AMCToken is BEP20 {
         uint256 _amcPerBlock,
         PrizePoolInterface _bnbPool,
         address _bnbSponsorhip
-    ) public BEP20("Amc Token", "AMC") {
+    ) public BEP20("Test Token", "Test") {
         // init distribution wallets
         devAddr = _devAddr;
         managerAddr = _managerAddr;
