@@ -3,8 +3,8 @@ const AMCStaking = artifacts.require("AMCStaking");
 
 const DEV_WALLET = "0x6C44eDacc815Cd625ca7191fF74D30B9c72104a3";
 const MANAGER_WALLET = "0x6C44eDacc815Cd625ca7191fF74D30B9c72104a3";
-const BNB_POOL_ADDRESS = "0x2632a11973ae02aa6bc2ae5d37175339869c6534";
-const BNB_SPONSOR = "0xe263cc642834c189fdb33ee6f2069d5462d4368c";
+const BNB_POOL_ADDRESS = "0xbccd4a3c8df54c887e5742fba5dc2a6f0c701f59";
+const BNB_SPONSOR = "0xfd6a98cd1a84713a74f8aa8869537b20dfffd515";
 module.exports = async function (deployer) {
   await deployer.deploy(AMCToken, DEV_WALLET, MANAGER_WALLET, "100000000000000000000", BNB_POOL_ADDRESS, BNB_SPONSOR);
   const token = await AMCToken.deployed();
