@@ -36,6 +36,8 @@ contract AMCToken is BEP20 {
     PrizePoolInterface public bnbPool;
     address public bnbSponsorhip;
 
+    bool public saleTaxOn;
+
     constructor (
         address _devAddr,
         address _managerAddr,
@@ -55,7 +57,7 @@ contract AMCToken is BEP20 {
         bnbPool = _bnbPool;
         bnbSponsorhip = _bnbSponsorhip;
 
-        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0xD99D1c33F9fC3444f8101754aBC46c52416550D1);
          // Create a uniswap pair for this new token
         // address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
         //     .createPair(address(this), _uniswapV2Router.WETH());
@@ -230,6 +232,14 @@ contract AMCToken is BEP20 {
         _setAutomatedMarketMakerPair(pair, true);
     }
 
+    function setLiquidityWallet(address _liquidityWallet) public onlyOwner {
+        liquidityWallet = _liquidityWallet;
+    }
+
+    function setSaleTaxOn(bool _on) public onlyOwner {
+        saleTaxOn = _on;
+    }
+
     function _transfer(
         address from,
         address to,
@@ -238,37 +248,39 @@ contract AMCToken is BEP20 {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
 
-        if( 
-        	!swapping &&
-            automatedMarketMakerPairs[to] && // sells only by detecting transfer to automated market maker pair
-        	from != address(uniswapV2Router) //router -> pair is removing liquidity which shouldn't have max
-        ) {
-            if(
-                !automatedMarketMakerPairs[from] &&
-                from != liquidityWallet &&
-                to != liquidityWallet
+        if (saleTaxOn) {
+            if( 
+                !swapping &&
+                automatedMarketMakerPairs[to] && // sells only by detecting transfer to automated market maker pair
+                from != address(uniswapV2Router) //router -> pair is removing liquidity which shouldn't have max
             ) {
-                uint256 totalSaleFeeRate = SaleFee();
-                if (totalSaleFeeRate != 0) {
-                    uint256 fees = amount.mul(totalSaleFeeRate).div(100);
+                if(
+                    !automatedMarketMakerPairs[from] &&
+                    from != liquidityWallet &&
+                    to != liquidityWallet
+                ) {
+                    uint256 totalSaleFeeRate = SaleFee();
+                    if (totalSaleFeeRate != 0) {
+                        uint256 fees = amount.mul(totalSaleFeeRate).div(100);
 
-                    amount = amount.sub(fees);
+                        amount = amount.sub(fees);
 
-                    super._transfer(from, address(this), fees);
-                    swapping = true;
-                    uint256 swapTokens = fees.mul(liquidityFee).div(100);
-                    uint256 bnbShare = fees.mul(bnbPrizeFee).div(100);
-                    uint256 burnShare = fees.sub(swapTokens).sub(bnbShare);
-                    swapAndLiquify(swapTokens);
-                    swapTokensForEth(bnbShare);
-                    bnbPool.depositTo{value: address(this).balance}(
-                        address(managerAddr),
-                        address(this).balance,
-                        address(bnbSponsorhip),
-                        address(this)
-                    );
-                    super._burn(address(this), burnShare);
-                    swapping = false;
+                        super._transfer(from, address(this), fees);
+                        swapping = true;
+                        uint256 swapTokens = fees.mul(liquidityFee).div(100);
+                        uint256 bnbShare = fees.mul(bnbPrizeFee).div(100);
+                        uint256 burnShare = fees.sub(swapTokens).sub(bnbShare);
+                        swapAndLiquify(swapTokens);
+                        swapTokensForEth(bnbShare);
+                        bnbPool.depositTo{value: address(this).balance}(
+                            address(managerAddr),
+                            address(this).balance,
+                            address(bnbSponsorhip),
+                            address(this)
+                        );
+                        super._burn(address(this), burnShare);
+                        swapping = false;
+                    }
                 }
             }
         }

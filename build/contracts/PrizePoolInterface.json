@@ -37,20 +37,20 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.6.0 <0.7.0;\r\n\r\n/// @title Escrows assets and deposits them into a yield source.  Exposes interest to Prize Strategy.  Users deposit and withdraw from this contract to participate in Prize Pool.\r\n/// @notice Accounting is managed using Controlled Tokens, whose mint and burn functions can only be called by this contract.\r\n/// @dev Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens\r\ninterface PrizePoolInterface {\r\n\r\n  /// @notice Deposit assets into the Prize Pool in exchange for tokens\r\n  /// @param to The address receiving the newly minted tokens\r\n  /// @param amount The amount of assets to deposit\r\n  /// @param controlledToken The address of the type of token the user is minting\r\n  /// @param referrer The referrer of the deposit\r\n  function depositTo(\r\n    address to,\r\n    uint256 amount,\r\n    address controlledToken,\r\n    address referrer\r\n  )\r\n    external payable;\r\n}",
-  "sourcePath": "D:\\_TechWork\\_amnext\\amc_staking\\contracts\\lib\\PrizePoolInterface.sol",
+  "sourcePath": "D:/_TechWork/_amnext/amc_staking/contracts/lib/PrizePoolInterface.sol",
   "ast": {
     "absolutePath": "/D/_TechWork/_amnext/amc_staking/contracts/lib/PrizePoolInterface.sol",
     "exportedSymbols": {
       "PrizePoolInterface": [
-        2561
+        542
       ]
     },
-    "id": 2562,
+    "id": 543,
     "license": "GPL-3.0",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2547,
+        "id": 528,
         "literals": [
           "solidity",
           ">=",
@@ -61,7 +61,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "39:31:5"
+        "src": "39:31:1"
       },
       {
         "abstract": false,
@@ -69,15 +69,15 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 2548,
+          "id": 529,
           "nodeType": "StructuredDocumentation",
-          "src": "74:409:5",
+          "src": "74:409:1",
           "text": "@title Escrows assets and deposits them into a yield source.  Exposes interest to Prize Strategy.  Users deposit and withdraw from this contract to participate in Prize Pool.\n @notice Accounting is managed using Controlled Tokens, whose mint and burn functions can only be called by this contract.\n @dev Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens"
         },
         "fullyImplemented": false,
-        "id": 2561,
+        "id": 542,
         "linearizedBaseContracts": [
-          2561
+          542
         ],
         "name": "PrizePoolInterface",
         "nodeType": "ContractDefinition",
@@ -85,13 +85,13 @@
           {
             "body": null,
             "documentation": {
-              "id": 2549,
+              "id": 530,
               "nodeType": "StructuredDocumentation",
-              "src": "519:319:5",
+              "src": "519:319:1",
               "text": "@notice Deposit assets into the Prize Pool in exchange for tokens\n @param to The address receiving the newly minted tokens\n @param amount The amount of assets to deposit\n @param controlledToken The address of the type of token the user is minting\n @param referrer The referrer of the deposit"
             },
             "functionSelector": "e323f825",
-            "id": 2560,
+            "id": 541,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -99,18 +99,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 2558,
+              "id": 539,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2551,
+                  "id": 532,
                   "mutability": "mutable",
                   "name": "to",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2560,
-                  "src": "867:10:5",
+                  "scope": 541,
+                  "src": "867:10:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -118,10 +118,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2550,
+                    "id": 531,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "867:7:5",
+                    "src": "867:7:1",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -133,13 +133,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2553,
+                  "id": 534,
                   "mutability": "mutable",
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2560,
-                  "src": "884:14:5",
+                  "scope": 541,
+                  "src": "884:14:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -147,10 +147,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2552,
+                    "id": 533,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "884:7:5",
+                    "src": "884:7:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -161,13 +161,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2555,
+                  "id": 536,
                   "mutability": "mutable",
                   "name": "controlledToken",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2560,
-                  "src": "905:23:5",
+                  "scope": 541,
+                  "src": "905:23:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -175,10 +175,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2554,
+                    "id": 535,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "905:7:5",
+                    "src": "905:7:1",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -190,13 +190,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 2557,
+                  "id": 538,
                   "mutability": "mutable",
                   "name": "referrer",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2560,
-                  "src": "935:16:5",
+                  "scope": 541,
+                  "src": "935:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -204,10 +204,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2556,
+                    "id": 537,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "935:7:5",
+                    "src": "935:7:1",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -218,33 +218,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "860:96:5"
+              "src": "860:96:1"
             },
             "returnParameters": {
-              "id": 2559,
+              "id": 540,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "978:0:5"
+              "src": "978:0:1"
             },
-            "scope": 2561,
-            "src": "842:137:5",
+            "scope": 542,
+            "src": "842:137:1",
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2562,
-        "src": "483:499:5"
+        "scope": 543,
+        "src": "483:499:1"
       }
     ],
-    "src": "39:943:5"
+    "src": "39:943:1"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/D/_TechWork/_amnext/amc_staking/contracts/lib/PrizePoolInterface.sol",
       "exportedSymbols": {
         "PrizePoolInterface": [
-          2561
+          542
         ]
       },
       "license": "GPL-3.0"
@@ -262,9 +262,9 @@
             ".0"
           ]
         },
-        "id": 2547,
+        "id": 528,
         "name": "PragmaDirective",
-        "src": "39:31:5"
+        "src": "39:31:1"
       },
       {
         "attributes": {
@@ -278,19 +278,19 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            2561
+            542
           ],
           "name": "PrizePoolInterface",
-          "scope": 2562
+          "scope": 543
         },
         "children": [
           {
             "attributes": {
               "text": "@title Escrows assets and deposits them into a yield source.  Exposes interest to Prize Strategy.  Users deposit and withdraw from this contract to participate in Prize Pool.\n @notice Accounting is managed using Controlled Tokens, whose mint and burn functions can only be called by this contract.\n @dev Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens"
             },
-            "id": 2548,
+            "id": 529,
             "name": "StructuredDocumentation",
-            "src": "74:409:5"
+            "src": "74:409:1"
           },
           {
             "attributes": {
@@ -304,7 +304,7 @@
               ],
               "name": "depositTo",
               "overrides": null,
-              "scope": 2561,
+              "scope": 542,
               "stateMutability": "payable",
               "virtual": false,
               "visibility": "external"
@@ -314,9 +314,9 @@
                 "attributes": {
                   "text": "@notice Deposit assets into the Prize Pool in exchange for tokens\n @param to The address receiving the newly minted tokens\n @param amount The amount of assets to deposit\n @param controlledToken The address of the type of token the user is minting\n @param referrer The referrer of the deposit"
                 },
-                "id": 2549,
+                "id": 530,
                 "name": "StructuredDocumentation",
-                "src": "519:319:5"
+                "src": "519:319:1"
               },
               {
                 "children": [
@@ -326,7 +326,7 @@
                       "mutability": "mutable",
                       "name": "to",
                       "overrides": null,
-                      "scope": 2560,
+                      "scope": 541,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -340,14 +340,14 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2550,
+                        "id": 531,
                         "name": "ElementaryTypeName",
-                        "src": "867:7:5"
+                        "src": "867:7:1"
                       }
                     ],
-                    "id": 2551,
+                    "id": 532,
                     "name": "VariableDeclaration",
-                    "src": "867:10:5"
+                    "src": "867:10:1"
                   },
                   {
                     "attributes": {
@@ -355,7 +355,7 @@
                       "mutability": "mutable",
                       "name": "amount",
                       "overrides": null,
-                      "scope": 2560,
+                      "scope": 541,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -368,14 +368,14 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2552,
+                        "id": 533,
                         "name": "ElementaryTypeName",
-                        "src": "884:7:5"
+                        "src": "884:7:1"
                       }
                     ],
-                    "id": 2553,
+                    "id": 534,
                     "name": "VariableDeclaration",
-                    "src": "884:14:5"
+                    "src": "884:14:1"
                   },
                   {
                     "attributes": {
@@ -383,7 +383,7 @@
                       "mutability": "mutable",
                       "name": "controlledToken",
                       "overrides": null,
-                      "scope": 2560,
+                      "scope": 541,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -397,14 +397,14 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2554,
+                        "id": 535,
                         "name": "ElementaryTypeName",
-                        "src": "905:7:5"
+                        "src": "905:7:1"
                       }
                     ],
-                    "id": 2555,
+                    "id": 536,
                     "name": "VariableDeclaration",
-                    "src": "905:23:5"
+                    "src": "905:23:1"
                   },
                   {
                     "attributes": {
@@ -412,7 +412,7 @@
                       "mutability": "mutable",
                       "name": "referrer",
                       "overrides": null,
-                      "scope": 2560,
+                      "scope": 541,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -426,19 +426,19 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2556,
+                        "id": 537,
                         "name": "ElementaryTypeName",
-                        "src": "935:7:5"
+                        "src": "935:7:1"
                       }
                     ],
-                    "id": 2557,
+                    "id": 538,
                     "name": "VariableDeclaration",
-                    "src": "935:16:5"
+                    "src": "935:16:1"
                   }
                 ],
-                "id": 2558,
+                "id": 539,
                 "name": "ParameterList",
-                "src": "860:96:5"
+                "src": "860:96:1"
               },
               {
                 "attributes": {
@@ -447,24 +447,24 @@
                   ]
                 },
                 "children": [],
-                "id": 2559,
+                "id": 540,
                 "name": "ParameterList",
-                "src": "978:0:5"
+                "src": "978:0:1"
               }
             ],
-            "id": 2560,
+            "id": 541,
             "name": "FunctionDefinition",
-            "src": "842:137:5"
+            "src": "842:137:1"
           }
         ],
-        "id": 2561,
+        "id": 542,
         "name": "ContractDefinition",
-        "src": "483:499:5"
+        "src": "483:499:1"
       }
     ],
-    "id": 2562,
+    "id": 543,
     "name": "SourceUnit",
-    "src": "39:943:5"
+    "src": "39:943:1"
   },
   "compiler": {
     "name": "solc",
@@ -472,7 +472,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-06T15:38:20.142Z",
+  "updatedAt": "2021-07-07T15:34:52.375Z",
   "devdoc": {
     "details": "Must be inherited to provide specific yield-bearing asset control, such as Compound cTokens",
     "kind": "dev",
