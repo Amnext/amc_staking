@@ -59,13 +59,13 @@ contract AMCToken is BEP20 {
 
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0xD99D1c33F9fC3444f8101754aBC46c52416550D1);
          // Create a uniswap pair for this new token
-        address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
-            .createPair(address(this), _uniswapV2Router.WETH());
+        // address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
+        //     .createPair(address(this), _uniswapV2Router.WETH());
 
         uniswapV2Router = _uniswapV2Router;
-        uniswapV2Pair = _uniswapV2Pair;
+        // uniswapV2Pair = _uniswapV2Pair;
 
-        _setAutomatedMarketMakerPair(_uniswapV2Pair, true);
+        // _setAutomatedMarketMakerPair(_uniswapV2Pair, true);
     }
 
     // store addresses that a automatic market maker pairs. Any transfer *to* these addresses
