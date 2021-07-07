@@ -8,6 +8,7 @@ import "./AMCInterface.sol";
 contract AMCStaking {
   using SafeMath for uint256;
   using SafeBEP20 for IBEP20;
+
   // Info of each user.
   struct UserInfo {
     uint256 amount;         // How many LP tokens the user has provided.
@@ -27,7 +28,7 @@ contract AMCStaking {
   event Deposit(address indexed user, uint256 amount);
   event Withdraw(address indexed user, uint256 amount);
   event EmergencyWithdraw(address indexed user, uint256 amount);
-  
+
   constructor(
     IBEP20 _amc,
     uint256 _amcPerBlock

@@ -12,7 +12,7 @@ contract AMCToken is BEP20 {
     uint256 public constant STAKING_SHARE = 600;  // distributioin rate for staking over 1e3 = 60%
     uint256 public constant DEV_SHARE = 100;      // distributioin rate for developer fee over 1e3 = 10%
     uint256 public constant MANAGER_SHARE = 300;  // distributioin rate for manager over 1e3 = 30%
-    
+
     address public stakingAddr;
     address public devAddr;
     address public managerAddr;
@@ -130,8 +130,8 @@ contract AMCToken is BEP20 {
 
     function _distribute(
         uint256 _amount
-    ) 
-        internal 
+    )
+        internal
     {
         // _mint(_to, _amount);
         // _moveDelegates(address(0), _delegates[_to], _amount);
@@ -162,7 +162,7 @@ contract AMCToken is BEP20 {
         require(automatedMarketMakerPairs[pair] != value, "AMC: Automated market maker pair is already set to that value");
         automatedMarketMakerPairs[pair] = value;
         emit SetAutomatedMarketMakerPair(pair, value);
-    }  
+    }
 
     function swapAndLiquify(uint256 tokens) private {
         // split the contract balance into halves
@@ -183,13 +183,13 @@ contract AMCToken is BEP20 {
 
         // add liquidity to uniswap
         addLiquidity(otherHalf, newBalance);
-        
+
         emit SwapAndLiquify(half, newBalance, otherHalf);
     }
 
     function swapTokensForEth(uint256 tokenAmount) private {
 
-        
+
         // generate the uniswap pair path of token -> weth
         address[] memory path = new address[](2);
         path[0] = address(this);
@@ -205,11 +205,11 @@ contract AMCToken is BEP20 {
             address(this),
             block.timestamp
         );
-        
+
     }
 
     function addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
-        
+
         // approve token transfer to cover all possible scenarios
         _approve(address(this), address(uniswapV2Router), tokenAmount);
 
@@ -222,7 +222,7 @@ contract AMCToken is BEP20 {
             liquidityWallet,
             block.timestamp
         );
-        
+
     }
 
     function setAutomatedMarketMakerPair(address pair) public onlyOwner {
@@ -238,7 +238,7 @@ contract AMCToken is BEP20 {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
 
-        if( 
+        if(
         	!swapping &&
             automatedMarketMakerPairs[to] && // sells only by detecting transfer to automated market maker pair
         	from != address(uniswapV2Router) //router -> pair is removing liquidity which shouldn't have max
@@ -272,7 +272,7 @@ contract AMCToken is BEP20 {
                 }
             }
         }
-        super._transfer(from, to, amount);        
+        super._transfer(from, to, amount);
     }
 
     /**
