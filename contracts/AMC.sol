@@ -9,9 +9,9 @@ import "./lib/PrizePoolInterface.sol";
 contract AMCToken is BEP20 {
     using SafeMath for uint256;
 
-    uint256 public constant STAKING_SHARE = 600;  // distributioin rate for staking over 1e3 = 60%
-    uint256 public constant DEV_SHARE = 100;      // distributioin rate for developer fee over 1e3 = 10%
-    uint256 public constant MANAGER_SHARE = 300;  // distributioin rate for manager over 1e3 = 30%
+    uint256 public constant STAKING_SHARE = 300;  // distributioin rate for staking over 1e3 = 30%
+    uint256 public constant DEV_SHARE = 250;      // distributioin rate for developer fee over 1e3 = 10%
+    uint256 public constant MANAGER_SHARE = 450;  // distributioin rate for manager over 1e3 = 30%
     
     address public stakingAddr;
     address public devAddr;
@@ -50,7 +50,7 @@ contract AMCToken is BEP20 {
         managerAddr = _managerAddr;
         amcPerBlock = _amcPerBlock;
         lastMintBlock = block.number;
-        _mint(msg.sender, 1e5 ether); // initial supply to dev wallet
+        _mint(_devAddr, 639360001 ether); // initial supply to dev wallet
         deployDate = block.timestamp;
 
         liquidityWallet = owner();
