@@ -38,7 +38,7 @@ module.exports = {
 
   networks: {
     mainnet: {
-      provider: () => new HDWalletProvider("", `https://bsc-dataseed.binance.org/`),
+      provider: () => new HDWalletProvider(mnemonic, `https://bsc-dataseed.binance.org/`),
       network_id: 56,
       confirmations: 2,      // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 10000,  // # of blocks before a deployment times out  (minimum/default: 50)
